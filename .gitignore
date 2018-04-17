@@ -1,0 +1,22 @@
+# things created by go
+bin/
+pkg/
+
+# things created by environments (vs code adds tools to gopath)
+src/github.com/acroca/
+src/github.com/derekparker/
+src/github.com/golang/
+src/github.com/MichaelTJones/
+src/github.com/nsf/
+src/github.com/ramya-rao-a/
+src/github.com/rogpeppe/
+src/github.com/sqs/
+src/github.com/uudashr/
+src/golang.org/
+
+# vender directory
+vender/
+
+# outputs and tests
+/backup
+/backup_*.zip
