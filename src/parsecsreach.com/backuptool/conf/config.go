@@ -9,6 +9,8 @@ import (
 	"os/user"
 	"path"
 	"regexp"
+
+	"golang.org/x/oauth2"
 )
 
 /*
@@ -17,6 +19,7 @@ Config contains all the information about a backup task
 type Config struct {
 	Dirs    []Dir  `json:"dirs,omitempty"`
 	Version string `json:"version,omitempty"`
+	Drive   Drive  `json:"drive"`
 }
 
 /*
@@ -28,6 +31,15 @@ type Dir struct {
 	Exclude  string `json:"exclude"`
 	incRegex *regexp.Regexp
 	excRegex *regexp.Regexp
+}
+
+/*
+Drive contains information needed to connect to google drive.
+*/
+type Drive struct {
+	OauthConfig *oauth2.Config `json:"oauth_config"`
+	Token       *oauth2.Token  `json:"token"`
+	FolderID    string         `json:"folder_id"`
 }
 
 /*
@@ -76,7 +88,22 @@ func (d *Dir) compile() {
 /*
 Default contains the very basic configuration
 */
-var Default = Config{Dirs: []Dir{}, Version: "0.0.1"}
+var Default = Config{
+	Dirs:    []Dir{},
+	Version: "0.0.1",
+	Drive: Drive{
+		OauthConfig: &defaultOauth2Config,
+	},
+}
+
+var defaultOauth2Config = oauth2.Config{
+	Endpoint: oauth2.Endpoint{
+		AuthURL:  "https://accounts.google.com/o/oauth2/auth",
+		TokenURL: "https://accounts.google.com/o/oauth2/token",
+	},
+	RedirectURL: "urn:ietf:wg:oauth:2.0:oob",
+	Scopes:      []string{"https://www.googleapis.com/auth/drive.file"},
+}
 
 /*
 ReadConfig loads the config file. There is no optional path here. It is always fixed to make

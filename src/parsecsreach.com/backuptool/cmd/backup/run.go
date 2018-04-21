@@ -11,6 +11,8 @@ import (
 	"path"
 	"time"
 
+	"parsecsreach.com/backuptool/dri"
+
 	"parsecsreach.com/backuptool/conf"
 )
 
@@ -36,9 +38,40 @@ func (r Run) Run() {
 		log.Fatalln("could not load config ", err)
 	}
 
-	log.Println(createTotalFileName())
+	filename := createTotalFileName()
+	log.Println(filename)
+	createTotalZipFile(c, filename)
+	log.Println("Uploading to google drive")
+	if err := uploadZipFile(c, filename); err != nil {
+		log.Fatalln("Could not upload zip", err)
+	}
+	log.Println("Done")
+}
 
-	f, err := os.Create(createTotalFileName())
+func uploadZipFile(c *conf.Config, filename string) error {
+	s, err := os.Stat(filename)
+	if err != nil {
+		return err
+	}
+
+	f, err := os.Open(filename)
+	if err != nil {
+		return err
+	}
+	defer f.Close()
+
+	conn, err := dri.GetClient(c)
+	if err != nil {
+		return err
+	}
+
+	_, err = dri.Upload(conn, s.Name(), "application/zip", c.Drive.FolderID, s.Size(), f)
+	return err
+
+}
+
+func createTotalZipFile(c *conf.Config, filename string) {
+	f, err := os.Create(filename)
 	if err != nil {
 		log.Fatalln("Could not create output file", err)
 	}
@@ -75,6 +108,7 @@ func (r Run) Run() {
 }
 
 func createTotalFileName() string {
+	// TODO: include path
 	ts := time.Now().Format("2006-01-02T15-04-05")
 	return fmt.Sprintf("backup_%s.zip", ts)
 }
@@ -115,7 +149,7 @@ func addFiles(w *zip.Writer, d conf.Dir, basePath, baseInZip string) error {
 			}
 		} else if file.IsDir() {
 
-			// Recurse
+			// Recursive
 			addFiles(w, d, p, file.Name()+"/")
 		}
 	}

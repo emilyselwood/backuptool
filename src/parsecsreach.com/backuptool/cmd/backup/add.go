@@ -32,7 +32,7 @@ func (a Add) Run() {
 	var inc string
 	var exc string
 
-	if len(os.Args) > 3 {
+	if len(os.Args) > 3 || os.Args[2] == "-help" {
 		mySet := flag.NewFlagSet("", flag.ExitOnError)
 		mySet.StringVar(&inc, "i", "", "include regex")
 		mySet.StringVar(&exc, "e", "", "exclude regex")
