@@ -6,8 +6,8 @@ pkg/
 src/github.com/
 src/golang.org/
 
-# vender directory
-vender/
+# vendor directory
+vendor/
 
 # outputs and tests
 /backup
