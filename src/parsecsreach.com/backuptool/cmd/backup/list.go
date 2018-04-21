@@ -5,7 +5,7 @@ import (
 	"io"
 	"log"
 
-	"github.com/wselwood/backuptool/conf"
+	"parsecsreach.com/backuptool/conf"
 )
 
 /*

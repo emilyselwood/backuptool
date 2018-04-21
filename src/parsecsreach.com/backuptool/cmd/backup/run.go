@@ -11,7 +11,7 @@ import (
 	"path"
 	"time"
 
-	"github.com/wselwood/backuptool/conf"
+	"parsecsreach.com/backuptool/conf"
 )
 
 /*

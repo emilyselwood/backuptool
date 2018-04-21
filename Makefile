@@ -1,5 +1,5 @@
 
-BASE_PACKAGE=github.com/wselwood/backuptool
+BASE_PACKAGE=parsecsreach.com/backuptool
 TOOLS=backup
 
 MAKEPATH := $(abspath $(lastword $(MAKEFILE_LIST)))

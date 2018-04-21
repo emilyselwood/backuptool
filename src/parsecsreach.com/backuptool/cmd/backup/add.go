@@ -7,7 +7,7 @@ import (
 	"log"
 	"os"
 
-	"github.com/wselwood/backuptool/conf"
+	"parsecsreach.com/backuptool/conf"
 )
 
 /*
