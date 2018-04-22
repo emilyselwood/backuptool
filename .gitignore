@@ -4,7 +4,7 @@ pkg/
 
 # things created by environments (vs code adds tools to GOPATH)
 src/github.com/
-src/golang.org/x/
+src/golang.org/
 
 # vendor directory
 vendor/
