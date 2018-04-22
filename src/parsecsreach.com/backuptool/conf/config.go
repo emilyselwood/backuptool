@@ -17,9 +17,10 @@ import (
 Config contains all the information about a backup task
 */
 type Config struct {
-	Dirs    []Dir  `json:"dirs,omitempty"`
-	Version string `json:"version,omitempty"`
-	Drive   Drive  `json:"drive"`
+	Dirs        []Dir  `json:"dirs,omitempty"`
+	Version     string `json:"version,omitempty"`
+	Drive       Drive  `json:"drive"`
+	LocalFolder string `json:"local_folder"`
 }
 
 /*

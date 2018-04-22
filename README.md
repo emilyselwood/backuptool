@@ -30,16 +30,20 @@ Run `backup add <path to be backed up>` this will add a folder to be backed up. 
 
 When you want to create a backup run `backup create` to generate a backup and store it in google drive
 
-When you need to restore a backup download the file from google drive and run `backup restore <path to backup file>` and your files should be restored.
+When (not if) you need to restore a backup download the file from google drive and run `backup restore <path to backup file>` and your files should be restored. The configuration that the backup was created with is included in the backup so it shouldn't need setting up before you start.
 
 ## TODO
 
 * Pattern in file name
-* Zip path fixing
 * Restore from google drive directly
 * Test restore from google drive
+* Update config when restoring backup
 * Log last run and make create not do anything if not long enough
 * Document adding to start up
 * Document internals (config locations etc...)
+* Legal
+  * Licence
+  * COC
+  * Contributing
 * Blog post
 * Go lang tutorial based on this project

@@ -38,7 +38,9 @@ func (r Run) Run() {
 		log.Fatalln("could not load config ", err)
 	}
 
-	filename := createTotalFileName()
+	os.MkdirAll(c.LocalFolder, os.ModePerm|os.ModeDir)
+
+	filename := createTotalFileName(c)
 	log.Println(filename)
 	createTotalZipFile(c, filename)
 	log.Println("Uploading to google drive")
@@ -107,10 +109,10 @@ func createTotalZipFile(c *conf.Config, filename string) {
 	}
 }
 
-func createTotalFileName() string {
-	// TODO: include path
+func createTotalFileName(c *conf.Config) string {
 	ts := time.Now().Format("2006-01-02T15-04-05")
-	return fmt.Sprintf("backup_%s.zip", ts)
+	// TODO: Make the filename format configureable
+	return fmt.Sprintf("%sbackup_%s.zip", c.LocalFolder, ts)
 }
 
 func folderZipName(d string) string {
@@ -150,7 +152,7 @@ func addFiles(w *zip.Writer, d conf.Dir, basePath, baseInZip string) error {
 		} else if file.IsDir() {
 
 			// Recursive
-			addFiles(w, d, p, file.Name()+"/")
+			addFiles(w, d, p, baseInZip+file.Name()+"/")
 		}
 	}
 	return nil

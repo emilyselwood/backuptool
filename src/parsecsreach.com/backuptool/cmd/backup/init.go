@@ -76,6 +76,14 @@ func (i Init) Run() {
 
 	c.Drive.FolderID = folderID
 
+	fmt.Println("Please enter the local folder to store the backups")
+	var localFolder string
+	if _, err := fmt.Scan(&localFolder); err != nil {
+		log.Fatalf("Unable to read local folder name %v", err)
+	}
+
+	c.LocalFolder = localFolder
+
 	if err := conf.WriteConfig(&c); err != nil {
 		log.Fatalln("Could not write config file ", err)
 	}
